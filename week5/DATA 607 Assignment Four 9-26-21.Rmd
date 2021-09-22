@@ -1,0 +1,85 @@
+---
+title: "DATA 607 Assignment Four 9-26-21"
+author: "Joseph Foy"
+date: "9/262/2021"
+output:
+  html_document: default
+  number_sections: true
+  pdf_document: default
+  df_print: paged
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Overview
+
+#### In this assignment, we are provided a spreadsheet that describes August 2021 data for Israeli hospitalization (“Severe Cases”) rates for people under 50 (assume “50 and under”) and over 50, for both un-vaccinated and fully vaccinated populations. We are required to analyze the data, and try to answer the questions below. High level domain knowledge is needed around: 
+
+#### (1) Israel’s total population (per the World Bank it is 9.216 million as of 2020), 
+#### (2) Who is eligible to receive vaccinations, and 
+#### (3) What does it mean to be fully vaccinated? Please note any apparent discrepancies that you observe in your analysis.
+
+#### Questions to Answer:
+#### 1. Create a .CSV file (or optionally, a relational database!) that includes the information in the spreadsheet.  We are Create a .CSV file (or optionally, a relational database!) that includes all the information above.  You’re encouraged to use a “wide” structure similar to how the information appears above, so that you can practice tidying and transformations as described below.encouraged to use a “wide” structure similar to how the information appears above, so that you can practice tidying and transformations as described below.
+
+#### 2. Read the information from your .CSV file into R, and use tidyr and dplyr as needed to tidy and transform your data.
+
+#### 3. Perform analysis as described in the spreadsheet and above.
+
+#### 4. Your code should be in an R Markdown file, posted to rpubs.com, and should include narrative descriptions of your data cleanup work, analysis, and conclusions. Please include in your homework submission: 1) The URL to the .Rmd file in your GitHub repository, and 2) The URL for your rpubs.com web page.
+
+#### Upon examination the question, we looked more closely at what appears to be the blog that this dataset was posted (see blog at:  https://www.covid-datascience.com/post/israeli-data-how-can-efficacy-vs-severe-disease-be-strong-when-60-of-hospitalized-are-vaccinated).  In summary, they blog by the author, Jeffrey Morris, challenged reports what he perceived as a distortion of reports suggesting that vaccines do not work or have lost their effectiveness vs. severe diseases. Morris obtained the original dataset posted by the Isreali government.  The dataset included age stratified data.  Morris translated the header information from Hebrew to English, performed additional calculations to determine population data for all Isrealis at the age of 12 and higher.  
+
+#### There are a few issues with Morris' presentation in a summary table.  First, the data that he downloaded was stratified in age groups.  The data included stara at 40-49 and 50-59.  He presented his table for all below and above 50, but his data did included 50 year old persons.  In his table, the age cutoff point should have been presented as greater than or equal to 50.  The second issue is the population count.  The original data excludes persons under 12 years old.  That would partially reconcile the difference between the World Bank estimated population of Isreal at 9.216 million and the total population of everyone vaccinated or not vaccinated, under 50 or over 50 (total = 6,937,546) on the Morris table. However, this reported data is not accurate.  Morris presents his table in two segments, either vaccinated or not vaccinated.  He did not report on partially vaccinated persons.  The original data set reported by the Isreali government did include partially vaccinated persons.  When Morris reported the percentages of persons vaccinated or not, in both age groups, the reported percentage did not included partially vaccinated persons.  Morris reported that 78.7% of those under 50 years old were fully vaccinated, but he included partially vaccinated in his calculation.  From the information presented, the total population appears to be 6,937,546, but when using that figure, the total vaccinated population percentage is 81.2% (5,634,634/6,937,546).  The inclusion of the partially vaccinated population should have been reported so the reader could arrive at a total population figure of  7,156,910, instead of 6,937,546.  Morris should had considered inclusion of partially vaccinated as not being vaccinated and include those numbers or report partially vaccinated as well as no vaccination and fully vaccinated numbers.  In the United States, until you have all shots, one is not fully vaccinated and considered not vaccinated.  If Isreal follows the same policy, all the percentage figures that Morris reported may be considered misleading.  The fully vaccinated percentages would then lower and may actually bolster a case for vaccine effectiveness.
+
+#### As background, in this assignment an excel file was stored in the instructor's GitHub account and downloaded to my hard drive.  I then saved the file as a csv and uploaded it to my GitHub account.  Then I import the dataset into R and needed libraries as follows.
+
+```{r load libraries and data}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+VaxData  = read_csv("https://raw.githubusercontent.com/professorfoy/DATA-607/main/israeli_vaccination_data_analysis_start.csv",show_col_types = FALSE)
+```
+
+#### View the variable names with the "str" command.
+
+```{r View Variables}
+str(VaxData)
+```
+
+```{r}
+head(VaxData) 
+```
+```{r}
+view(VaxData)
+```
+
+#### Create Objects for Total Counts.
+
+```{r}
+NoVaxUnder50 <- c(1116834)
+NoVaxOver50 <- c(186078)
+VaxUnder50 <- c(3501118)
+VaxOver50 <- c(2133516)
+AllVax <- (VaxOver50+VaxUnder50)
+AllNoVax <- (NoVaxUnder50+NoVaxOver50)
+sum(AllNoVax)
+sum(AllVax)
+Population <- (AllNoVax+AllVax)
+sum(Population)
+```
+
+```{r}
+PercentNoVaxUnder50 <- (NoVaxUnder50/Population)
+PercentNoVaxOver50 <- (NoVaxOver50/Population)
+PercentVaxUnder50 <- (VaxUnder50/Population)
+PercentVaxOver50 <- (VaxOver50/Population)
+PercentAllNoVax <- (AllNoVax/Population)
+PercentAllVax <- (AllVax/Population)
+PercentAllNoVax
+PercentAllVax
+```
+
