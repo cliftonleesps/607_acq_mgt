@@ -44,6 +44,22 @@ library(ggplot2)
 VaxData  = read_csv("https://raw.githubusercontent.com/professorfoy/DATA-607/main/israeli_vaccination_data_analysis_start.csv",show_col_types = FALSE)
 ```
 
+
+```{r}
+# Start tidying the data
+glimpse(VaxData)
+
+
+# rename the column names
+rename(VaxData, Not_Vax = `Population %`)
+rename(VaxData, Fully_Vax = `...3`)
+rename(VaxData, Not_Vax = `Population %`)
+
+
+VaxData <- VaxData %>%
+  filter(row(VaxData) >= 1 & row(VaxData) <=5)
+
+
 #### View the variable names with the "str" command.
 
 ```{r View Variables}
