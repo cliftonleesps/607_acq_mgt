@@ -41,11 +41,13 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
-VaxData  = read_csv("https://raw.githubusercontent.com/professorfoy/DATA-607/main/israeli_vaccination_data_analysis_start.csv",show_col_types = FALSE)
 ```
 
 
 ```{r}
+
+VaxData  = read_csv("https://raw.githubusercontent.com/professorfoy/DATA-607/main/israeli_vaccination_data_analysis_start.csv",show_col_types = FALSE)
+
 # Start tidying the data
 glimpse(VaxData)
 
@@ -67,7 +69,21 @@ VaxData$Age[[4]] <- c('>50')
 
 VaxData <- VaxData %>%
     mutate(`Not_Vax_%` = 0)
+
+VaxData <- VaxData %>%
+    mutate(`Fully_Vax_%` = 0)
+
+
 VaxData$`Not_Vax_%`[[1]] <- VaxData$Not_Vax[[2]]
+VaxData$`Fully_Vax_%`[[1]] <- VaxData$Fully_Vax[[2]]
+
+VaxData$`Not_Vax_%`[[3]] <- VaxData$Not_Vax[[4]]
+VaxData$`Fully_Vax_%`[[3]] <- VaxData$Fully_Vax[[4]]
+
+VaxData <- VaxData %>%
+  filter(row(VaxData) == 1 | row(VaxData) == 3)
+
+
 #### View the variable names with the "str" command.
 
 ```{r View Variables}
