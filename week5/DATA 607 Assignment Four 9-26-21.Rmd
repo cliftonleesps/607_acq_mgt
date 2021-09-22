@@ -51,15 +51,23 @@ glimpse(VaxData)
 
 
 # rename the column names
-rename(VaxData, Not_Vax = `Population %`)
-rename(VaxData, Fully_Vax = `...3`)
-rename(VaxData, Not_Vax = `Population %`)
+VaxData <- rename(VaxData, Not_Vax = `Population %`)
+VaxData <- rename(VaxData, Fully_Vax = `...3`)
+VaxData <- rename(VaxData, Not_Vax_Per_100k = `Severe Cases`)
+VaxData <- rename(VaxData, Fully_Vax_Per_100k = `...5`)
+VaxData <- rename(VaxData, Efficacy_vs_Severe_Disease = `Efficacy`)
 
+
+# remove unneeded columns
+VaxData <- VaxData %>%
+  filter(row(VaxData) >= 2 & row(VaxData) <=5)
+
+VaxData$Age[[2]] <- c('<50')
+VaxData$Age[[4]] <- c('>50')
 
 VaxData <- VaxData %>%
-  filter(row(VaxData) >= 1 & row(VaxData) <=5)
-
-
+    mutate(`Not_Vax_%` = 0)
+VaxData$`Not_Vax_%`[[1]] <- VaxData$Not_Vax[[2]]
 #### View the variable names with the "str" command.
 
 ```{r View Variables}
