@@ -1,0 +1,16 @@
+---
+title: "Project 2"
+author: "Cliff Lee"
+date: "9/28/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(tibble)
+
+```
