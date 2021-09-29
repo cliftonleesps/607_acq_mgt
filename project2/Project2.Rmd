@@ -14,3 +14,26 @@ library(tidyr)
 library(tibble)
 
 ```
+
+# Customer Churn
+```{r}
+
+customers <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/customer_churn.csv")
+
+```
+
+# College Navigator
+
+```{r}
+colleges <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/collegenavigator_compare.csv")
+```
+
+
+# Income & Religion
+
+```{r}
+income <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/income_distribution_by_religious_group.csv")
+
+```
+
+
