@@ -62,17 +62,34 @@ for (division in LETTERS[1:3]) {
 # College Navigator
 
 * Massive clean up
-* Identify rows with tuition and other costs
-* identify rows with grants and scholarships
-* identify in state costs
+* FIX filter out rows w/o keep tag
+* convert to numeric
 * aggregate the costs
+* aggregate the financial aid and grants
 
 Cost of tuition, room and board, etc per year
 Total grants and scholarships?
 What are the final costs after grants and likely scholarships?
 
 ```{r}
-colleges <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/collegenavigator_compare.csv")
+colleges <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/collegenavigator_compare.csv",skip=3, col_names = c("attribute", "college1", "college2","college3"), n_max=57)
+
+colleges[1,1] <- "Name"
+colleges[8,1] <- paste(colleges[8,1], "cost")
+colleges[22,1] <- paste(colleges[22,1]," total grant")
+colleges[25,1] <- paste(colleges[25,1]," federal grant")
+colleges[28,1] <- paste(colleges[28,1]," pell grant")
+colleges[31,1] <- paste(colleges[31,1]," other federal grant")
+colleges[34,1] <- paste(colleges[34,1]," state local grant")
+colleges[37,1] <- paste(colleges[37,1]," institutional grant")
+colleges[51,1] <- paste(colleges[51,1]," net price")
+
+for (i in 51:1) { 
+  if (!(i %in% c(1,8,22,25,28,31,34,37,51))) {
+    colleges <- colleges[-i,]
+  }
+}
+
 ```
 
 
@@ -81,19 +98,22 @@ colleges <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mg
 * Clean data
 * The data above can organized from wide to long in order to assess what proportion of people in a certain religion fits into a certain income category. This may be another interesting way to look at the dataset. 
 * Which religion has the highest percentage for each income range
-
+* schema
+  religion + range (Pk)
+  number
 
 ```{r}
 income <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/income_distribution_by_religious_group.csv", col_names=c("religion","less_than_30","30_to_49","50_to_99","100_or_more","total"), skip=1)
 
-# Remove the percent signs and convert to integer
+# Remove the percent signs and convert to integer for some columns
 for (c in c("less_than_30","30_to_49","50_to_99","100_or_more")) {
-  income[[c]] <- str_replace(income[[c]], "%", "")
-  income[[c]] = as.numeric(as.character(income[[c]]))
-  
+  income[[c]] = as.numeric(
+                          as.character(
+                                      str_replace(income[[c]], "%", "")
+                                      )
+                          )
 }
 
-# convert to integer
 
 
 ```
