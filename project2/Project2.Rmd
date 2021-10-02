@@ -16,13 +16,60 @@ library(tibble)
 ```
 
 # Customer Churn
+* Clean data
+* Convert from Long to wide format for losses or a separate tibble
+* Calculate customer churn among Divisions
+* Schema
+  PK + Description
+  month
+  number_customers
+
 ```{r}
 
-customers <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/customer_churn.csv")
+customers <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/customer_churn.csv", n_max=6)
+customers[['Division']][2] <- 'A'
+customers[['Division']][4] <- 'B'
+customers[['Division']][6] <- 'C'
+
+customers_clean <- tibble(
+        "division" = "division",
+        "type" = "description",
+        "month" = "month",
+        "number_customers" = 0
+)
+months <- c('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec')
+
+for (division in LETTERS[1:3]) {
+  for (description in c("Gained", "Lost")) {
+    # select one row at a time
+    row <- customers %>% filter (Division == division & Description == description)
+    #glimpse(row)
+    for (month in months) {
+      customers_clean <- customers_clean %>% add_row(
+        "division" = division,
+        "type" = description,
+        "month" = month,
+        "number_customers" = row[[month]]
+      )
+    }
+  } # description
+} # division
+
+
 
 ```
 
 # College Navigator
+
+* Massive clean up
+* Identify rows with tuition and other costs
+* identify rows with grants and scholarships
+* identify in state costs
+* aggregate the costs
+
+Cost of tuition, room and board, etc per year
+Total grants and scholarships?
+What are the final costs after grants and likely scholarships?
 
 ```{r}
 colleges <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/collegenavigator_compare.csv")
@@ -31,8 +78,23 @@ colleges <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mg
 
 # Income & Religion
 
+* Clean data
+* The data above can organized from wide to long in order to assess what proportion of people in a certain religion fits into a certain income category. This may be another interesting way to look at the dataset. 
+* Which religion has the highest percentage for each income range
+
+
 ```{r}
-income <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/income_distribution_by_religious_group.csv")
+income <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/income_distribution_by_religious_group.csv", col_names=c("religion","less_than_30","30_to_49","50_to_99","100_or_more","total"), skip=1)
+
+# Remove the percent signs and convert to integer
+for (c in c("less_than_30","30_to_49","50_to_99","100_or_more")) {
+  income[[c]] <- str_replace(income[[c]], "%", "")
+  income[[c]] = as.numeric(as.character(income[[c]]))
+  
+}
+
+# convert to integer
+
 
 ```
 
