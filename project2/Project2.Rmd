@@ -16,9 +16,6 @@ library(tibble)
 ```
 
 # Customer Churn
-* Clean data
-* Convert from Long to wide format for losses or a separate tibble
-* Calculate customer churn among Divisions
 * Schema
   PK + Description
   month
@@ -27,6 +24,7 @@ library(tibble)
 ```{r}
 
 customers <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/customer_churn.csv", n_max=6)
+customers <- as_tibble(customers)
 customers[['Division']][2] <- 'A'
 customers[['Division']][4] <- 'B'
 customers[['Division']][6] <- 'C'
@@ -98,6 +96,7 @@ for (i in 51:1) {
 * Clean data
 * The data above can organized from wide to long in order to assess what proportion of people in a certain religion fits into a certain income category. This may be another interesting way to look at the dataset. 
 * Which religion has the highest percentage for each income range
+* bar chart 
 * schema
   religion + range (Pk)
   number
