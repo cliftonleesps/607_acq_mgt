@@ -1,5 +1,203 @@
-"Name","Address","Website","Type","Awards offered","Campus setting","Campus housing","Student population","Undergraduate students","Graduation Rate","Transfer-Out Rate","Cohort Year *","Net Price **","Largest Program","IPEDS ID","OPE ID"
-"Rensselaer Polytechnic Institute","110 8th St, Troy, New York 12180-3590","www.rpi.edu/","4-year, Private not-for-profit","Bachelor's degree|Master's degree|Doctor's degree - research/scholarship","City: Small","Yes","7501","6283","87%","2%","Fall 2014","$40,661","-","194824","00280300"
-"","* Cohort Year represents the year for which students began their studies and applies to Graduation and Transfer Out Rates.","","","","","","","","","","","","","",""
-"","** Net Price is Average Net Price for 2019-2020 generated for full-time beginning undergraduate students who were awarded grant or scholarship aid from federal, state or local governments, or the institution. For public institutions only students paying the in-state or in-district rate are included.  For institutions that charge students by program, net price is generated for the institution’s largest program.","","","","","","","","","","","","","",""
-"","NA (Not applicable) - Graduation rate, transfer-out rate and the net price are not applicable to institutions that do not have full-time, first-time degree-seeking undergraduate students in the applicable cohort year or the financial aid year.","","","","","","","","","","","","","",""
+﻿National Center for Education Statistics,,,,
+College Navigator,,,,
+Generated at:10/3/2021 6:36:06 PM from URL:http://nces.ed.gov/collegenavigator/default.aspx?q=Rens&s=NY&fv=196051+196097+190594+196413+194824&cp=1&sl=190594+196097+196051+196413&xp=1,,,,
+,CUNY Hunter College,Stony Brook University,SUNY Morrisville,Syracuse University
+"City, State","New York, New York","Stony Brook, New York","Morrisville, New York","Syracuse, New York"
+Type,"4-year, Public","4-year, Public","4-year, primarily associate's, Public","4-year, Private not-for-profit"
+Campus setting,City: Large,Suburb: Large,Rural: Distant,City: Midsize
+Estimated Student Expenses (Before Aid),,,,
+Total for,Undergraduates,Undergraduates,Undergraduates,Undergraduates
+On Campus,-,-,-,"$75,652 "
+Off Campus,-,-,-,"$75,652 "
+Off Campus with Family,-,-,-,"$59,296 "
+In-state,,,,
+On Campus,"$24,377 ","$27,743 ","$27,270 ",-
+Off Campus,"$31,828 ","$31,899 ","$28,670 ",-
+Off Campus with Family,"$13,000 ","$16,327 ","$12,350 ",-
+Out-of-state,,,,
+On Campus,"$32,327 ","$45,413 ","$37,180 ",-
+Off Campus,"$39,778 ","$49,569 ","$38,580 ",-
+Off Campus with Family,"$20,950 ","$33,997 ","$22,260 ",-
+All student expenses data apply to full-time first-time degree/certificate-seeking students for academic year 2020-2021.,,,,
+Financial Aid,,,,
+"Full-time, first-time degree/certificate-seeking students, 2019-2020",,,,
+Percent receiving any financial aid,94%,76%,95%,88%
+Grant aid received,,,,
+Total grants,,,,
+Percent receiving,93%,71%,89%,86%
+Average amount received,"$9,347 ","$10,468 ","$9,154 ","$25,864 "
+Federal,,,,
+Percent receiving,89%,50%,66%,18%
+Average amount received,"$4,453 ","$5,253 ","$4,794 ","$5,492 "
+Pell,,,,
+Percent receiving,61%,37%,66%,13%
+Average amount received,"$5,460 ","$5,410 ","$4,687 ","$5,024 "
+Other Federal,,,,
+Percent receiving,86%,45%,5%,15%
+Average amount received,$724 ,"$1,445 ","$1,557 ","$2,191 "
+State/Local,,,,
+Percent receiving,81%,46%,81%,10%
+Average amount received,"$5,186 ","$4,644 ","$3,730 ","$3,887 "
+Institutional,,,,
+Percent receiving,17%,64%,88%,85%
+Average amount received,"$3,231 ","$4,146 ","$2,222 ","$24,390 "
+Student loans received,,,,
+Total loans,,,,
+Percent receiving,5%,39%,81%,38%
+Average amount received,"$5,836 ","$6,671 ","$6,811 ","$10,703 "
+Federal,,,,
+Percent receiving,5%,38%,80%,36%
+Average amount received,"$4,286 ","$4,916 ","$5,602 ","$5,379 "
+Non-federal,,,,
+Percent receiving,1%,5%,9%,8%
+Average amount received,"$13,020 ","$15,136 ","$11,552 ","$26,907 "
+Net Price,,,,
+"Average net price, 2019-2020",Based on students paying in-state or in-district tuition,Based on students paying in-state or in-district tuition,Based on students paying in-state or in-district tuition,
+"Full-time beginning undergraduate students who received grant or scholarship aid from federal, state or local governments, or the institution",,,,
+2019-2020,"$4,014 ","$16,478 ","$18,198 ","$47,177 "
+Full-time beginning undergraduate students who received Title IV Aid by income,,,,
+"$0 – $30,000",$396 ,"$11,863 ","$15,062 ","$17,250 "
+"$30,001 – $48,000","$2,135 ","$14,163 ","$17,133 ","$19,737 "
+"$48,001 – $75,000","$6,908 ","$19,344 ","$20,871 ","$23,533 "
+"$75,001 – $110,000","$9,436 ","$21,214 ","$22,345 ","$28,653 "
+"$110,001 and more","$12,093 ","$23,730 ","$25,641 ","$47,284 "
+Enrollment,,,,
+Total enrollment,"24,052","26,782","2,486","21,322"
+Undergraduate enrollment,"17,943","18,010","2,486","14,479"
+Undergraduate transfer-in enrollment,"2,060","1,596",117,263
+Undergraduates by Attendance Status,,,,
+Full-time,77%,92%,83%,96%
+Part-time,23%,8%,17%,4%
+Undergraduates by Gender,,,,
+Male,36%,50%,46%,46%
+Female,64%,50%,54%,54%
+Undergraduates by Race / ethnicity,,,,
+American Indian or Alaska Native,0%,0%,0%,1%
+Asian,29%,30%,1%,7%
+Black or African American,10%,7%,27%,7%
+Hispanic/Latino,30%,14%,9%,10%
+Native Hawaiian or other Pacific Islander,0%,0%,0%,0%
+White,23%,30%,58%,55%
+Two or more races,3%,3%,3%,4%
+Race/ethnicity unknown,0%,7%,2%,3%
+Non-resident alien,5%,10%,1%,14%
+Undergraduates by Age (Fall 2019),,,,
+24 and under,80%,93%,83%,97%
+25 and over,20%,7%,17%,3%
+Age unknown,0%,0%,0%,0%
+Undergraduates by Residence,,,,
+In-state,90%,88%,93%,31%
+Out-of-state,1%,6%,6%,55%
+Foreign countries,0%,6%,1%,14%
+Unknown,8%,0%,0%,0%
+"All enrollment data, unless otherwise specified, are for Fall 2020.",,,,
+Admissions,,,,
+Undergraduate application fee (2020-2021),$65 ,$50 ,$50 ,$85 
+Admissions Fall 2020,,,,
+Percent admitted,40%,49%,77%,69%
+Percent admitted who enrolled,20%,18%,19%,16%
+SAT Evidence-Based Reading and Writing,,,,
+25th Percentile,580,600,430,-
+75th Percentile,650,690,530,-
+SAT Math,,,,
+25th Percentile,590,630,430,-
+75th Percentile,690,750,530,-
+ACT Composite,,,,
+25th Percentile,25,26,18,-
+75th Percentile,31,32,23,-
+ACT English,,,,
+25th Percentile,25,25,16,-
+75th Percentile,33,34,21,-
+ACT Math,,,,
+25th Percentile,24,25,17,-
+75th Percentile,30,32,25,-
+Retention and Graduation Rates,,,,
+Retention rates for first-time students1 who began program in 2019,,,,
+Full-time,84%,90%,73%,89%
+Part-time,52%,67%,-,37%
+1 4-year schools report retention for first-time bachelor degree-seeking students only.,,,,
+"Graduation rates for full-time, first-time undergraduates who began program in",2014,2014,2014,2014
+Percentage of entering students counted in calculating graduation rate,47%,67%,79%,90%
+Overall graduation rate,56%,76%,38%,83%
+Transfer-out rate,29%,13%,31%,-
+"Bachelor's degree rate, 4-year",27%,63%,-,71%
+"Bachelor's degree rate, 5-year",50%,74%,-,82%
+"Bachelor's degree rate, 6-year",56%,76%,-,83%
+Outcome Measures,,,,
+"Award and enrollment rates after 8-years of entry for degree/certificate-seeking undergraduates who entered in 2012-13, by Pell status",,,,
+First-time entering,,,,
+Full-time,,,,
+Received a certificate,0%,-,-,0%
+Received an Associate's degree,-,-,24%,0%
+Received a Bachelor's degree,60%,75%,13%,83%
+Enrolled at same institution,3%,0%,0%,0%
+Enrolled at different institution,25%,17%,35%,13%
+"Full-time, Pell",,,,
+Received a certificate,0%,-,-,0%
+Received an Associate's degree,-,-,22%,0%
+Received a Bachelor's degree,60%,78%,9%,80%
+Enrolled at same institution,2%,1%,0%,0%
+Enrolled at different institution,25%,17%,37%,15%
+"Full-time, non-Pell",,,,
+Received a certificate,0%,-,-,0%
+Received an Associate's degree,-,-,28%,0%
+Received a Bachelor's degree,60%,74%,22%,84%
+Enrolled at same institution,3%,0%,0%,0%
+Enrolled at different institution,25%,17%,30%,12%
+Part-time,,,,
+Received a certificate,0%,-,-,6%
+Received an Associate's degree,-,-,10%,6%
+Received a Bachelor's degree,24%,0%,0%,35%
+Enrolled at same institution,5%,0%,0%,0%
+Enrolled at different institution,35%,100%,24%,12%
+"Part-time, Pell",,,,
+Received a certificate,0%,-,-,8%
+Received an Associate's degree,-,-,7%,8%
+Received a Bachelor's degree,8%,-,0%,31%
+Enrolled at same institution,8%,-,0%,0%
+Enrolled at different institution,25%,-,33%,8%
+"Part-time, non-Pell",,,,
+Received a certificate,0%,-,-,0%
+Received an Associate's degree,-,-,14%,0%
+Received a Bachelor's degree,28%,0%,0%,50%
+Enrolled at same institution,4%,0%,0%,0%
+Enrolled at different institution,38%,100%,14%,25%
+Non-first-time entering,,,,
+Full-time,,,,
+Received a certificate,0%,-,-,0%
+Received an Associate's degree,-,-,24%,0%
+Received a Bachelor's degree,60%,75%,13%,83%
+Enrolled at same institution,3%,0%,0%,0%
+Enrolled at different institution,25%,17%,35%,13%
+"Full-time, Pell",,,,
+Received a certificate,0%,-,-,0%
+Received an Associate's degree,-,-,22%,0%
+Received a Bachelor's degree,60%,78%,9%,80%
+Enrolled at same institution,2%,1%,0%,0%
+Enrolled at different institution,25%,17%,37%,15%
+"Full-time, non-Pell",,,,
+Received a certificate,0%,-,-,0%
+Received an Associate's degree,-,-,28%,0%
+Received a Bachelor's degree,60%,74%,22%,84%
+Enrolled at same institution,3%,0%,0%,0%
+Enrolled at different institution,25%,17%,30%,12%
+Part-time,,,,
+Received a certificate,0%,-,-,6%
+Received an Associate's degree,-,-,10%,6%
+Received a Bachelor's degree,24%,0%,0%,35%
+Enrolled at same institution,5%,0%,0%,0%
+Enrolled at different institution,35%,100%,24%,12%
+"Part-time, Pell",,,,
+Received a certificate,0%,-,-,8%
+Received an Associate's degree,-,-,7%,8%
+Received a Bachelor's degree,8%,-,0%,31%
+Enrolled at same institution,8%,-,0%,0%
+Enrolled at different institution,25%,-,33%,8%
+"Part-time, non-Pell",,,,
+Received a certificate,0%,-,-,0%
+Received an Associate's degree,-,-,14%,0%
+Received a Bachelor's degree,28%,0%,0%,50%
+Enrolled at same institution,4%,0%,0%,0%
+Enrolled at different institution,38%,100%,14%,25%
+(-) Item not applicable,,,,
+"Items not applicable means an institution did not report students in 2012-13 for one or more of the student characteristics: attendance (full- or part-time); prior postsecondary experience (first-time or non-first-time); or Pell grant status. Also, some institutions may not have reported all three types of awards (certificates, Associate’s degree, or Bachelor’s degree) that they conferred because it is most likely these institutions do not offer all three type of awards.",,,,
