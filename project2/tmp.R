@@ -15,6 +15,12 @@ customers[['Division']][2] <- 'A'
 customers[['Division']][4] <- 'B'
 customers[['Division']][6] <- 'C'
 
+
+customers %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"))
+
+
 # Create a longer format with the tidyr pivot_longer function
 customers_long_format <- pivot_longer(customers,cols=3:14,names_to="month", values_to="num_customers")
 

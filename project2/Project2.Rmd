@@ -1,8 +1,11 @@
 ---
 title: "Project 2"
 author: "Cliff Lee"
-date: "9/28/2021"
-output: html_document
+date: "10/03/2021"
+output: 
+  html_document:
+    theme: 
+      bootswatch: lux
 ---
 
 ```{r setup, include=FALSE}
@@ -12,97 +15,280 @@ library(tidyverse)
 library(dplyr)
 library(tidyr)
 library(tibble)
+library(kableExtra)
+library(reshape2)
 
 ```
 
-# Customer Churn
-* Schema
-  PK + Description
-  month
-  number_customers
+
+### Introduction
+
+This project focuses on data transformation and clean up of three datasets from various sources. Each dataset required initial analysis in order to prepare it for downstream analysis and to answer main questions:
+
+- **Customer churn** - how many customers have been lost or gained over a year for three company divisions?
+- **College costs and grants** - comparing four New York colleges, what are their tuition costs and maximum possible grants?
+- **Religion and salary** - Plot reglious affiations with salary earnings.
+
+
+### Customer Churn
+
+This sample dataset contains three company divisions (A, B and C) along with their customers gained and lost over a year long period. Given this information, determine which division has the highest and lowest rate of customer churn. In this case, customer churn is defined as a ratio of customers lost to customers gained. A division with a low churn rate would be promoted as a model of good operations and customer relations from which other divisions can learn from.
+
+Source: https://tinyurl.com/rnb87tbv
+
+
+##### Original Dataset 
+
+The original dataset is in a wide format with each division's performance on a performance chart. 
 
 ```{r}
 
-customers <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/customer_churn.csv", n_max=6)
+customers <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/customer_churn.csv", 
+                      n_max=6, 
+                      show_col_types=FALSE)
+```
+
+\
+\
+\
+
+```{r , echo=FALSE,warning=FALSE,message=FALSE}
+
+# This section does not need to be displayed as it merely formats the dataset for pretty printing
+
 customers <- as_tibble(customers)
 customers[['Division']][2] <- 'A'
 customers[['Division']][4] <- 'B'
 customers[['Division']][6] <- 'C'
 
-customers_clean <- tibble(
-        "division" = "division",
-        "type" = "description",
-        "month" = "month",
-        "number_customers" = 0
-)
-months <- c('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec')
-
-for (division in LETTERS[1:3]) {
-  for (description in c("Gained", "Lost")) {
-    # select one row at a time
-    row <- customers %>% filter (Division == division & Description == description)
-    #glimpse(row)
-    for (month in months) {
-      customers_clean <- customers_clean %>% add_row(
-        "division" = division,
-        "type" = description,
-        "month" = month,
-        "number_customers" = row[[month]]
-      )
-    }
-  } # description
-} # division
-
-
+# Show the data frame
+customers %>%
+  kbl(caption = "<center><strong>Monthly Customer Data</strong></center>") %>%
+  kable_material(c("striped", "hover"))
 
 ```
 
-# College Navigator
+##### Clean up 
 
-* Massive clean up
-* FIX filter out rows w/o keep tag
-* convert to numeric
-* aggregate the costs
-* aggregate the financial aid and grants
+The operations used to clean up this data includes: pivoting; filtering; mutating; summing. Without these functions, it would be impossible to normalize the data set since the gained and lost data are on different rows. Additionally, summing up the total customers is an aggregate function and requires all numbers to be in a single column.
 
-Cost of tuition, room and board, etc per year
-Total grants and scholarships?
-What are the final costs after grants and likely scholarships?
+```{r }
+
+# Create a longer format with the tidyr pivot_longer function
+customers_long_format <- pivot_longer(customers,cols=3:14,names_to="month", values_to="num_customers")
+
+customers_aggregate <- tibble (division = '', churn = 0)
+
+for (division in LETTERS[1:3]) {
+    # sum up the customers lost and gained
+    customers_lost <- customers_long_format %>% filter(Division==division & Description == "Lost") %>% select(num_customers) %>% sum()
+    customers_gained <- customers_long_format %>% filter(Division==division & Description == "Gained") %>% select(num_customers) %>% sum()
+    
+    # add a row to the aggregate tibble
+    customers_aggregate <- add_row(
+                                    customers_aggregate,
+                                    division = division,
+                                    churn = abs(customers_lost/customers_gained)
+                                   )
+} # division
+
+# Remove the unneeded first row
+customers_aggregate <- customers_aggregate[-1,]
+
+```
+
+
+##### Plot and Conclusion
+
+As evident from the below chart, Division B has the lowest churn rate of 37%, followed by Division at 51%.  Division A's rate of 67% is worrying. Even with a year with a high gain in customers, its churn rate destroys over half its customer base.
+
+```{r , echo=FALSE,warning=FALSE,message=FALSE}
+# Plot divisions vs churn rate
+ggplot(customers_aggregate) + 
+  geom_col(mapping=aes(x=division, y=churn),width=0.15) + ylim(0,1) + 
+  ggtitle("Customer Churn By Division") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  ylab("Churn Percentage") + 
+  xlab("Division")
+
+```
+
+The detailed data:
+
+```{r , echo=FALSE,warning=FALSE,message=FALSE}
+
+# Show the data frame
+customers_aggregate 
+```
+
+
+### New York College Tuitions and Grants
+
+The National Center for Education Statistics maintains an online tool for families to research colleges across many different aspects. Its website allows visitors to pick up to four colleges and generate a CSV that compares them in a long format. For this dataset, we only want to know the different in state tuition costs and the maximum possible grants (e.g. federal, state, institutional) to offset those costs.
+
+
+Sources: 
+
+- **https://tinyurl.com/bvn8v5n4** \
+- **https://nces.ed.gov/collegenavigator** \
+
+
+##### Original Dataset 
+
+The original dataset is in a long format with each school occupying a column.
 
 ```{r}
-colleges <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/collegenavigator_compare.csv",skip=3, col_names = c("attribute", "college1", "college2","college3"), n_max=57)
 
-colleges[1,1] <- "Name"
-colleges[8,1] <- paste(colleges[8,1], "cost")
-colleges[22,1] <- paste(colleges[22,1]," total grant")
-colleges[25,1] <- paste(colleges[25,1]," federal grant")
-colleges[28,1] <- paste(colleges[28,1]," pell grant")
-colleges[31,1] <- paste(colleges[31,1]," other federal grant")
-colleges[34,1] <- paste(colleges[34,1]," state local grant")
-colleges[37,1] <- paste(colleges[37,1]," institutional grant")
-colleges[51,1] <- paste(colleges[51,1]," net price")
+# Read the CSV from Github, skipping the first 3 lines and up to 57 lines
+colleges <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/collegenavigator_compare.csv",
+                     col_names = c("attribute", "Hunter CUNY", "Stony Brook","Morrisville CUNY","Syracuse"), 
+                     skip=3, 
+                     n_max=57,
+                     show_col_types=FALSE
+                     )
+```
 
-for (i in 51:1) { 
-  if (!(i %in% c(1,8,22,25,28,31,34,37,51))) {
+```{r, echo=FALSE,warning=FALSE,message=FALSE}
+colleges$Syracuse[11] <- colleges$Syracuse[7]
+
+# Explicitly rename the following row numbers: 8; 22; 25; 28; 31; 34; 37; 51
+# Explicitly rename the following row numbers: 11; 25; 28; 31; 34; 37; 40; 54
+colleges[11,1] <- "total_cost"
+colleges[25,1] <- "total_grant"
+colleges[28,1] <- "federal_grant"
+colleges[31,1] <- "pell_grant"
+colleges[34,1] <- "other_federal_grant"
+colleges[37,1] <- "state_local_grant"
+colleges[40,1] <- "institutional_grant"
+colleges[54,1] <- "net_price"
+
+
+# Now remove the unneeded rows
+for (i in 57:1) { 
+  if (!(i %in% c(11, 25, 28, 31, 34, 37, 40, 54))) {
     colleges <- colleges[-i,]
   }
 }
 
+# Show the data frame
+colleges %>%
+  kbl(caption = "College Navigator Dataset") %>%
+  kable_material(c("striped", "hover"))
+
+# Remove the commas and dollar signs from columns 2:4
+for (i in 2:5) {
+  colleges[[i]] <- str_remove_all(colleges[[i]], "[,$]")
+}
+
+```
+
+##### Clean up 
+
+The operations used to clean up this data includes: casting to numeric; mutate; melt. These functions allow for rotating the original dataset into a more useful form for plotting and aggregating costs.
+
+```{r}
+# Transpose to wider format
+colleges <- as.data.frame(t(colleges))
+
+# Rename the column names from row 1 and then remove redundant row 1
+colnames(colleges) <- colleges[1,]
+colleges <- colleges[-1,]
+
+# Copy the row names as separate column
+colleges <- tibble::rownames_to_column(colleges, "name")
+
+colleges <- as_tibble(colleges)
+
+# view(colleges)
+
+# Convert everything to numeric
+for (i in 2:length(colleges)) {
+  colleges[[i]] <- as.numeric(colleges[[i]])
+}
+
+
+# Mutate and make new columns
+colleges <- colleges %>%
+            mutate(
+                  total_possible_grants = federal_grant+pell_grant+other_federal_grant+state_local_grant+institutional_grant,
+                  possible_price_minus_grants = total_cost - total_possible_grants,
+                  difference_net_and_possible_price = net_price - possible_price_minus_grants
+                  )
+
+dfm <- melt(colleges[,c("name","total_cost", "total_possible_grants","possible_price_minus_grants")],id.vars = "name")
+```
+
+##### College Costs and Grants - Conclusion
+
+The college with the highest cost, Syracuase, also had the highest possible grants. However, the grants did not provide enough of a discount as compared to other colleges with lower tuition rates; its yearly cost could be almost $40,000. Both Hunter and Stony Brook had lower tuition and relatively large possible grants in relation to their tuition making them a very reasonable option for undergraduates attending an instate school.
+```{r, echo=FALSE,warning=FALSE,message=FALSE}
+
+ggplot(dfm,aes(x = name,y = value)) + 
+  geom_bar(aes(fill = variable),stat = "identity",position = "dodge") +
+  labs(title="New York College Grants and Costs") +
+  ylab("Cost ($)") +
+  xlab("University") +
+  scale_fill_manual("Costs",values=c("#5E7CC2", "#00225A", "#D5A418"),labels=c("Gross Tuition", "Maximum Grants", "Net Tuition")) +
+  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 
-# Income & Religion
+### Religion and Salary
 
-* Clean data
-* The data above can organized from wide to long in order to assess what proportion of people in a certain religion fits into a certain income category. This may be another interesting way to look at the dataset. 
-* Which religion has the highest percentage for each income range
-* bar chart 
-* schema
-  religion + range (Pk)
-  number
+This section's dataset came from a survey about people's religion and their salary range. One analysis we can do is see which religion had the highest percentage in the two highest income brackets (50k to 99k and 100k and up).
+
+Reference:
+- **https://tinyurl.com/36cxk573** \
+- **https://www.pewforum.org/religious-landscape-study/income-distribution** \
+
+
+##### Original Dataset 
+
+The dataset is in a wide format with each religion's percentages spread across each bracket. Although, this format is informative for the reader, we'll have to use the melt function to chart brackets with each row.
 
 ```{r}
-income <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/income_distribution_by_religious_group.csv", col_names=c("religion","less_than_30","30_to_49","50_to_99","100_or_more","total"), skip=1)
+income <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/income_distribution_by_religious_group.csv", 
+                   skip=0,
+                   show_col_types=FALSE
+                  )
+```
+
+```{r, echo=FALSE,warning=FALSE,message=FALSE}
+# Show the data frame
+income %>%
+  kbl(caption = "College Navigator Dataset") %>%
+  kable_material(c("striped", "hover"))
+```
+
+##### Data Cleanup 
+
+We have to shorten some of the affiliation names, as well as use the str_remove function to remove non numeric characters otherwise math functions will not work. We then 'melt' each religion with the bracket percentages.
+
+```{r, echo=FALSE,warning=FALSE,message=FALSE}
+# Reread, to start things off a little easier
+income <- read_csv("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/project2/income_distribution_by_religious_group.csv", 
+                   col_names=c("religion","less_than_30","30_to_49","50_to_99","100_or_more","total"), 
+                   skip=1,
+                   show_col_types=FALSE
+                  )
+```
+
+
+```{r}
+
+# Shorten the names
+income[1] = c(
+              "Buddhist",
+              "Catholic",
+              "Evan. Prot.",
+              "Hindu",
+              "Hist. Black Prot",
+              "JW",
+              "Jewish",
+              "Main. Prot.","Mormon",
+              "Muslim",
+              "Orth. Christian",
+              "Unaffiliated")
 
 # Remove the percent signs and convert to integer for some columns
 for (c in c("less_than_30","30_to_49","50_to_99","100_or_more")) {
@@ -113,8 +299,27 @@ for (c in c("less_than_30","30_to_49","50_to_99","100_or_more")) {
                           )
 }
 
-
-
+# make a temporary data frame by melting religion with the salary range columns
+dfm <- melt(income[,c("religion","less_than_30", "30_to_49", "50_to_99", "100_or_more")],id.vars = "religion")
 ```
+##### Plot and Conclusion
+
+From the dataset above, we can see that the Jewish and Orthodox Christian  faiths occupy the highest brackets with percentages of 44% and 36% respectively. The plot below further illustrates the relationship of faith to income ranges.
+
+```{r, echo=FALSE,warning=FALSE,message=FALSE}
+# make a bar plot
+ggplot(dfm,aes(x = religion,y = value)) +
+  geom_bar( aes(fill = variable),
+            stat = "identity",
+            position = "stack") +
+            labs(title="Religion & Income Levels") +
+            ylab("Percent") +
+            xlab("Religion") +
+            # scale_fill_discrete(name="Income Ranges") + 
+            scale_fill_manual("Income Ranges",values=c("#5E7CC2", "#00C1D9", "#00DBB9","#91EF8D"),labels=c("< 30k", "30k to 49k", "50k to 99k",">100k")) +
+            theme(plot.title = element_text(hjust = 0.5)) +
+            theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
 
 
