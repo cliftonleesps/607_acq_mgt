@@ -1,9 +1,9 @@
 <book>
   <title>Gig: Americans Talk about Their Jobs</title>
   <authors>
-    <author>Marisa Bowe</author>
-    <author>John Bowe</author>
-    <author>Sabin Streeter</author>
+    <author id="1">Marisa Bowe</author>
+    <author id="2">John Bowe</author>
+    <author id="3">Sabin Streeter</author>
   </authors>
   <isbn>0609807072</isbn>
   <pages>672 pages</pages>
