@@ -1,8 +1,8 @@
 {
-    title: "Kitchen Confidential: Adventures in the Culinary Underbelly",
-    author: "Anthony Bourdain",
-    isbn: [0060899220, 9780060899226],
-    pages: "312, 22 pages",
-    publisher: "Harper Perennial",
-    date: 2007
+    "title": "Kitchen Confidential: Adventures in the Culinary Underbelly",
+    "author": "Anthony Bourdain",
+    "isbn": [0060899220, 9780060899226],
+    "pages": "312, 22 pages",
+    "publisher": "Harper Perennial",
+    "date": 2007
 }
