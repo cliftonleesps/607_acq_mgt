@@ -2,7 +2,11 @@
 title: "Assignment 7 – Working with XML and JSON in R"
 author: "Cliff Lee"
 date: "10/10/2021"
-output: html_document
+output: 
+  html_document:
+    theme: 
+      bootswatch: simplex
+
 ---
 
 ```{r setup, include=FALSE}
@@ -37,15 +41,26 @@ kable(chosen_books) %>%
 ```
 
 
-Each book will be read from a source file into a local variable.
+Each book will have the following attributes:
+
+* Title
+* Author(s)
+* ISBN
+* Pages
+* Publisher
+* Date
 
 ## HTML - Take the Cannoli: Stories from the New World
 
-```{r}
-library(textreadr)
-# library(xml2)
-library(rvest)
+This section uses the textreader package to parse the HTML.
 
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(textreadr)
+library(rvest)
+```
+
+
+```{r}
 
 # Read the HTML from Github repository
 url_html <- "https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/week7/take_the_cannoli.html"
@@ -62,35 +77,37 @@ kable(book_html) %>%
 
 # remove this package, it conflicts with other xml readers
 detach("package:textreadr", unload=TRUE)
-detach("package:rvest", unload=TRUE)
 
 ```
 
 
 ## XML - Gig: Americans Talk about Their Jobs
 
+Using the XML and xml2 packages, we can parse XML documents. In this case, there are multiple authors.
+
+
 ```{r}
 
 library(XML)
 library(xml2)
 
-book_xml <- '<book><title>Gig: Americans Talk about Their Jobs</title><authors id="author_list"><author id="1">Marisa Bowe</author><author id="2">John Bowe</author><author id="3">Sabin Streeter</author></authors><isbn>0609807072</isbn><pages>672 pages</pages><publisher>Three Rivers Press</publisher><date>2001</date></book>'
+book_url <- 'https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/week7/gig.xml'
 
-data <- read_xml(book_xml)
+data <- read_xml(book_url)
 doc <- xmlParse(data)
 df <- xmlToDataFrame(nodes = getNodeSet(doc, "//book"))
 kable(df) %>%
   kable_styling(latex_options = "scale_down")
 
-detach("package:XML", unload=TRUE)
-detach("package:xml2", unload=TRUE)
 
 ```
 
 
 ## JSON - Kitchen Confidential: Adventures in the Culinary Underbelly
 
-Note: there are two rows since there are two ISBN's
+We parse a JSON document containing multiple ISBNs.
+
+Note: there are two rows since there are two ISBN's, the dataframe has two rows.
 
 ```{r}
 book_json <- as_tibble(jsonlite::fromJSON("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/week7/kitchen_confidential.json"))
