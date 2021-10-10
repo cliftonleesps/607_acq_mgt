@@ -9,6 +9,10 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(kableExtra)
 library(tibble)
+library(jsonlite)
+library(XML)
+
+
 ```
 
 ## HTML, JSON and XML
@@ -19,13 +23,13 @@ The chosen books are below:
 
 ```{r}
 
-books <- tibble(
+chosen_books <- tibble(
   Title = c("Take the Cannoli: Stories from the New World", "Gig: Americans Talk about Their Jobs", "Kitchen Confidential: Adventures in the Culinary Underbelly"),
   Author= c("Sarah Vowell","John Bowe, Marisa Bowe & Sabin Streeter", "Anthony Bourdain"),
   Format= c("HTML", "XML", "JSON")
 )
 
-kable(books) %>%
+kable(chosen_books) %>%
   kable_styling(latex_options = "scale_down")
 
 ```
@@ -35,7 +39,42 @@ Each book will be read from a source file into a local variable.
 
 ## HTML - Take the Cannoli: Stories from the New World
 
+```{r}
+# Read the HTML from Github repository
+url_html <- "https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/week7/take_the_cannoli.html"
+books_html <- read_html(url_html)
+
+# Use the xpath selector for the ID tag ("#books) and pipe to the html_table function
+book_html <- books_html %>% 
+  html_elements("#books") %>% 
+  html_table() 
+
+
+kable(book_html) %>%
+  kable_styling(latex_options = "scale_down")
+```
+
+
 ## XML - Gig: Americans Talk about Their Jobs
+
+```{r}
+book_xml <- '<book><title>Gig: Americans Talk about Their Jobs</title><authors>Marisa Bowe,John Bowe,Sabin Streeter</authors><isbn>0609807072</isbn><pages>672 pages</pages><publisher>Three Rivers Press</publisher><date>2001</date></book>'
+
+doc <- read_xml(book_xml)
+
+
+
+```
+
 
 ## JSON - Kitchen Confidential: Adventures in the Culinary Underbelly
 
+Note: there are two rows since there are two ISBN's
+
+```{r}
+book_json <- as_tibble(jsonlite::fromJSON("https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/week7/kitchen_confidential.json"))
+
+kable(book_json) %>%
+  kable_styling(latex_options = "scale_down")
+
+```
