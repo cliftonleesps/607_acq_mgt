@@ -1,6 +1,6 @@
 <book>
   <title>Gig: Americans Talk about Their Jobs</title>
-  <authors>
+  <authors id="author_list">
     <author id="1">Marisa Bowe</author>
     <author id="2">John Bowe</author>
     <author id="3">Sabin Streeter</author>

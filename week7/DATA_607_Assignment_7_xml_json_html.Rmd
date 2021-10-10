@@ -10,7 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 library(kableExtra)
 library(tibble)
 library(jsonlite)
-library(XML)
+#library(XML)
+
+#library(tidyverse)
 
 
 ```
@@ -40,6 +42,11 @@ Each book will be read from a source file into a local variable.
 ## HTML - Take the Cannoli: Stories from the New World
 
 ```{r}
+library(textreadr)
+# library(xml2)
+library(rvest)
+
+
 # Read the HTML from Github repository
 url_html <- "https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/week7/take_the_cannoli.html"
 books_html <- read_html(url_html)
@@ -52,17 +59,31 @@ book_html <- books_html %>%
 
 kable(book_html) %>%
   kable_styling(latex_options = "scale_down")
+
+# remove this package, it conflicts with other xml readers
+detach("package:textreadr", unload=TRUE)
+detach("package:rvest", unload=TRUE)
+
 ```
 
 
 ## XML - Gig: Americans Talk about Their Jobs
 
 ```{r}
-book_xml <- '<book><title>Gig: Americans Talk about Their Jobs</title><authors>Marisa Bowe,John Bowe,Sabin Streeter</authors><isbn>0609807072</isbn><pages>672 pages</pages><publisher>Three Rivers Press</publisher><date>2001</date></book>'
 
-doc <- read_xml(book_xml)
+library(XML)
+library(xml2)
 
+book_xml <- '<book><title>Gig: Americans Talk about Their Jobs</title><authors id="author_list"><author id="1">Marisa Bowe</author><author id="2">John Bowe</author><author id="3">Sabin Streeter</author></authors><isbn>0609807072</isbn><pages>672 pages</pages><publisher>Three Rivers Press</publisher><date>2001</date></book>'
 
+data <- read_xml(book_xml)
+doc <- xmlParse(data)
+df <- xmlToDataFrame(nodes = getNodeSet(doc, "//book"))
+kable(df) %>%
+  kable_styling(latex_options = "scale_down")
+
+detach("package:XML", unload=TRUE)
+detach("package:xml2", unload=TRUE)
 
 ```
 
