@@ -1,0 +1,41 @@
+---
+title: "Assignment 7 – Working with XML and JSON in R"
+author: "Cliff Lee"
+date: "10/10/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(kableExtra)
+library(tibble)
+```
+
+## HTML, JSON and XML
+
+This assignment involves reading three files in different formats into an R markdown file. The files were created manually for this exercise, although on the web, they probably exist in a raw form.
+
+The chosen books are below:
+
+```{r}
+
+books <- tibble(
+  Title = c("Take the Cannoli: Stories from the New World", "Gig: Americans Talk about Their Jobs", "Kitchen Confidential: Adventures in the Culinary Underbelly"),
+  Author= c("Sarah Vowell","John Bowe, Marisa Bowe & Sabin Streeter", "Anthony Bourdain"),
+  Format= c("HTML", "XML", "JSON")
+)
+
+kable(books) %>%
+  kable_styling(latex_options = "scale_down")
+
+```
+
+
+Each book will be read from a source file into a local variable.
+
+## HTML - Take the Cannoli: Stories from the New World
+
+## XML - Gig: Americans Talk about Their Jobs
+
+## JSON - Kitchen Confidential: Adventures in the Culinary Underbelly
+
