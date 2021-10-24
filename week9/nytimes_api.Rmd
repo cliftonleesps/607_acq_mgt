@@ -1,0 +1,62 @@
+---
+title: "NYTimes API"
+author: "Cliff Lee"
+date: "10/24/2021"
+output: 
+  html_document:
+    theme:
+      bootswatch: yeti
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+
+# Web libraries
+library(curl)
+library(jsonlite)
+
+# for presenting tables
+library(kableExtra)
+
+```
+
+## Brief
+
+In this assignment, we are pulling book review data in the JSON format. As there is a lot of meta data in the returned data, we'll only display the relevant book data in one of the sub data structures.
+
+**Note:** This script assumes an environment variable, *api_key_nytimes*, is set beforehand.
+
+
+```{r}
+
+# Set constants
+api_key <- Sys.getenv('api_key_nytimes')
+api_url <- "https://api.nytimes.com/svc/books/v3/lists.json?list=hardcover-fiction"
+
+# Build the api-key parameter
+api_param <- paste('api-key', api_key, sep='=')
+
+# Set the NYTimes API endpoint for the hard copy fiction with a GET request
+url <- paste(api_url, api_param, sep="&")
+
+# create a curl handle for connection
+curl_handle <- new_handle()
+handle_setopt(curl_handle, customrequest="GET")
+
+# Connect to the API
+json_request <- curl_fetch_memory(url, handle=curl_handle)
+
+# Retrieve the request content
+json_result <- fromJSON(rawToChar(json_request$content))
+
+json_tibble <- as_tibble(json_result, validate = F) 
+
+# use the results column for the book details
+books <- bind_rows( json_tibble$results$book_details )
+
+# Display the first three rows as an example
+kable(books %>% slice(1:3), caption = "NY Times Non Fiction Hardcover Titles" ) %>%
+  kable_styling(latex_options = "scale_down")
+```
