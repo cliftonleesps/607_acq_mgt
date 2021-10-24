@@ -1,0 +1,115 @@
+---
+title: "TidyVerse Vignette"
+author: "Cliff Lee"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{clifflee-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Overview
+
+In this assignment, you’ll practice collaborating around a code project with GitHub.  You could consider our collective work as building out a book of examples on how to use TidyVerse functions.
+
+GitHub repository:  https://github.com/acatlin/FALL2021TIDYVERSE
+
+
+Your task here is to Create an Example.  Using one or more TidyVerse packages, and any dataset from fivethirtyeight.com or Kaggle, create a programming sample “vignette” that demonstrates how to use one or more of the capabilities of the selected TidyVerse package with your selected dataset.
+
+
+## Topic 
+
+To illustrate how to use TidyVerse packages, datasets about college tuition costs will be consumed, tidied and analyzed. Specifically, tuition costs in 2018 and how they compare to 2010.
+
+Reference: https://data.ed.gov/dataset/college-scorecard-all-data-files-through-6-2020/resources 
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Setup
+
+To get started, we'll simply load the tidyverse package which includes many other sub-packages.
+
+```{r setup, message=FALSE}
+library (tidyverse)
+```
+
+
+## Readr Functions
+
+The Readr package provides functions to read regular, table formatted data from local or web files. The **read_csv** function below reads a CSV file into a dataframe.
+
+
+```{r}
+
+csv_2010 <- "https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/tidyverse/MERGED2010_11_PP.small.csv"
+csv_2018 <- "https://raw.githubusercontent.com/cliftonleesps/607_acq_mgt/main/tidyverse/MERGED2018_19_PP.small.csv"
+
+na_fields <- c("", "NA", "NULL", "PrivacySuppressed")
+
+
+# Use the readr::read_csv function
+college_2010 <- read_csv(csv_2010, na = na_fields, show_col_types = FALSE)
+college_2018 <- read_csv(csv_2018, na = na_fields, show_col_types = FALSE)
+```
+
+
+## Dplyr Functions
+
+Dplyr makes it easy to manipulate and join dataframes on various conditions.  The functions used in this block: **inner_join; mutate; filter; arrange; select**.
+
+```{r}
+?dplyr
+
+# Use the dplyr::inner_join function to join by Office of Postsecondary Education ID as primary key.
+# Created by the Department of Education.
+all_colleges <- inner_join(college_2010, 
+                           college_2018,
+                           by = "OPEID"
+                           )
+
+
+# create a new column diff_debt
+# Filter out any rows where the diff_debt == NA
+all_colleges <- all_colleges %>%
+  mutate( diff_debt = GRAD_DEBT_MDN.y - GRAD_DEBT_MDN.x) %>%
+  filter(!is.na(diff_debt) & !is.na(COSTT4_A.y)) %>%
+  arrange(desc(COSTT4_A.y), desc(diff_debt))
+
+
+# Select only a few columns (dplyr::select)
+display_table <- all_colleges %>% select("INSTNM.y","COSTT4_A.y","GRAD_DEBT_MDN.y","diff_debt")
+
+display_table <- display_table[1:500,]
+
+# rename columns
+colnames(display_table) <- c("Institution Name","Annual Tuition Cost (2018)","Median Debt at Graduation","Difference in Median Debt from 2010")
+
+```
+
+## GGPlot 
+
+For plotting and presentation graphics, ggplot2 offers advantages over the basic R ggplot package. The main advantage is being able to add aspects of the graph one by one without having to call functions with many parameters.  The function used:  **ggplot; geom_polint; aes; theme_bw; labs**.
+
+```{r}
+
+
+# Use the ggplot function to display our results
+ggplot(data = display_table) +
+  geom_point(
+    mapping = aes(x = `Annual Tuition Cost (2018)`, y = `Difference in Median Debt from 2010`)
+  ) +
+  theme_bw() +
+  labs(
+      title = "Annual Tuition (2018) Compared to Change in Median Debt",
+      x = "Annual Tuition 2018 ($)", 
+      y = "Change in Median Debt ($)")
+
+
+```
