@@ -1,0 +1,56 @@
+---
+title: "Recommender Systems"
+author: "Cliff Lee"
+date: "11/7/2021"
+output: html_document
+---
+
+## Recommender Systems - Bandcamp
+
+  Bandcamp is an online digital music service that serves fans and musical artists. In fact, depending on who you identify with, it's debatable as to who gets a better part of the deal. For fans, they get to purchase music in various high quality formats without any digital restrictions and they are assured a large percentage of their payments support the artists. Lastly, fans are exposed to many other similar musical acts in order to keep music as a viable form of living for struggling and up and coming artists.
+
+  Artists, of course, flock to Bandcamp as they receive a significantly higher percentage of each sale compared to other services. For example, looking at two of the biggest services, Apple iTunes pays about 10% and Spotify pays 70% compared to Bandcamp which pays between 80% and 85% of every digital sale to the artist. Also, artists are given the freedom to build their presence on Bandcamp as big or small as they desire.
+
+
+## Target Users
+
+The typical target user for Bandcamp is a music fan who loves music enough to pay for digital downloads. Even though this goal is identical to other digital music sites, this fan feels strongly about directly supporting and connecting with his or her favorite artists by linking a digital collection or leaving comments on a fan page. For the music fan, "the act of reaching out to someone, for something real in return, is gratifying." (*Pemberton, N.*)
+
+Note, this user may also use other services to listen to music (e.g. iTunes, LastFM, Spotify) but he/she makes a first effort to purchase music through Bandcamp before resorting back to other services.
+
+Also, the artists are the other target users. Their main goal is to list with a streaming/distribution service that encourages engagement and follows a fair trade music policy (*unknown*). Additionally, artists find Bandcamp 'very trivial' in terms of publishing their music (indigochill). Also, artists can directly communicate or thank their fans (*McDermott, M*) and built mailing list to maintain relationships to fans for every new work of art.
+
+## Key Goals
+
+Bandcamp has stated it desires to support all artists of any size. This statement really means as a service, it must allow fans to directly support artists in the simplest and quickest way possible. Removing obtrusive ads and flashy pages allows for a broader view of music acts on their site. This approach mirrors Google's approach to search when it began. Searching on Google used to simply show the closest hits to your query without any fanfare and this is a similar experience on Bandcamp.
+
+Searching for any term or band name returns the closest relevant hit on Bandcamp's site; it also asks the user if he would like to search for a genre with the same name. This design is clear and easy to grasp and understand without the user having to wonder if he is doing something wrong. 
+
+However, as the number of artists grows Bandcamp will undoubtedly have to start to alter its search algorithm according to region, time period, recent artists, etc. Otherwise, Bandcamp may show irrelevant pages and degrade as a site that highlights up and coming musical artists.
+
+
+## How to Help Bandcamp Accomplish Its Goals?
+
+Bandcamp obviously allows all search engines to crawl its site and appears to keep its HTML markup simple but well formed (no tags left opened, complete attributes). One way it can increase engagement is making sure their pages are ADA compliant for users with difficulty with eyesight or motor control difficulties; after all, all visitors should be able to enjoy music regardless of their abilities.
+
+Secondly, Bandcamp has an API for artists and merchants to interact with financial transactions however another API interface may allow other promotional sites to spot trends as well. This transparency would allow Bandcamp to help artists with another pain point in the music industry: advertisement and promotion. Making sales records or trends to other publications easy to access would fit within the core of Bandcamp's 'frictionless' relationship to music.
+
+Another possible improvement is to encourage fans to leave longer comments. The comments should have no format and they can be rated (liked only, no dislikes) but they should be moderated for appropriateness. If a comment is deemed interesting, it can be highlighted on an artist's page. This type of interaction would encourage a deeper engagement between a fan and artist.
+
+One last possibility is to curate a path for discovering new music. As opposed to mining users' collections and searches for data, this allows for matching fans to new music through many aspects. For example, if there is a new musical scene in a particular city, a new page collecting current artists as well as past artists may help fans connect with new music. Again, this approach relies heavily on mining data from artists' attributes and how they present themselves through self tagging.
+
+### *References and Citations*
+
+
+Unknown, Retrieved November 7, 2021 from https://bandcamp.com/fair_trade_music_policy
+
+indigochill. Retrieved November 7, 2021 from https://news.ycombinator.com/item?id=23723295.
+
+McDermott, Matt. Anti-Algorithmic Music: How Bandcamp Is Helping Artists Beat The Odds. Retrieved November 7, 2021 from https://ra.co/features/3703.
+
+
+Pemberton, Nathan Taylor. A Moment to Rethink How We Support Music. Retrieved November 7, 2021 from https://www.newyorker.com/culture/cultural-comment/a-moment-to-rethink-how-we-support-music.
+
+
+
+
